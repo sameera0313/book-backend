@@ -19,7 +19,7 @@ export const signup = async (req, res) => {
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || 'your-secret-key', { expiresIn: '1h' });
     
-    res.cookie('token', token, { httpOnly: true });
+    res.cookie('token', token, { httpOnly: true , secure: true, sameSite : 'None'});
     res.status(200).json(createResponse(true, 'User created successfully', { email: user.email, name: user.name }));
   } catch (error) {
     res.status(500).json(createResponse(false, 'Error creating user'));
@@ -43,7 +43,7 @@ export const login = async (req, res) => {
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || 'your-secret-key', { expiresIn: '1h' });
     
-    res.cookie('token', token, { httpOnly: true });
+    res.cookie('token', token, { httpOnly: true , secure: true, sameSite : 'None'});
     res.json(createResponse(true, 'Login successful', { email: user.email, name: user.name }));
   } catch (error) {
     res.status(500).json(createResponse(false, 'Error during login'));
